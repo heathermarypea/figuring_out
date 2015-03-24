@@ -55,7 +55,7 @@ dop.save.save_file = []; % this will be auto completed based upon the dop.def.ta
 % dop.save.save_dir = '/Users/mq20111600/Documents/nData/tmpData';
 
 % in.dir = '/Users/mq20111600/Documents/nData/tmp';%'/Users/mq20111600/Documents/nData/2013/201312infant_fTCD_UniSA/'; %
-dop.data_dir = 'C:\Users\hpayne\Dropbox\Studies\Preschool Doppler\T1\Data\Exps';
+dop.data_dir = 'C:\Users\hpayne\Dropbox\Studies\Preschool Doppler\Data\Exps';
 % in.file_list = dir(fullfile(in.dir,'*.exp'));
 % dop.file_list = dopGetFileList(dop.data_dir);%;dir(in.dir);
 [dop,okay] = dopGetFileList(dop);%;dir(in.dir);
