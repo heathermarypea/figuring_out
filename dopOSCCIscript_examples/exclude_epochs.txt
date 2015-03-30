@@ -1,6 +1,6 @@
 File 	Epochs to reject
-'PD1.exp'	[1 3 6 13]
-'PD3.exp'	[2 3]
+PD1.exp'	[1 3 6 13]
+PD3.exp	[2 3]
 PD4	
 PD5	
 PD6	

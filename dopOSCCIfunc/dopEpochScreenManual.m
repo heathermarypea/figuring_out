@@ -205,6 +205,8 @@ try
                         [~,tmp_file,tmp_ext] = fileparts(dop.tmp.man.manual_list{i});
                         if strcmp([tmp_file,tmp_ext],dop.file)
                             dop.tmp.match = i;
+                        elseif ~isempty(strfind(dop.tmp.man.manual_list,dop.file))
+                            dop.tmp.match = i;
                         end
                     end
                 end
@@ -216,7 +218,7 @@ try
                 else
                     dop.tmp.exclude = dop.tmp.man.manual_exclude{dop.tmp.match};
                     msg{end+1} = sprintf(['file (%s) found in'...
-                        'manual screening file: %s\n\t'...
+                        ' manual screening file: %s\n\t'...
                         '%u epochs to exclude'],dop.file,dop.tmp.manual_file,numel(dop.tmp.exclude));
                     if numel(dop.tmp.exclude)
                         msg{end} = strrep(msg{end},'exclude',...
