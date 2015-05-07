@@ -107,6 +107,7 @@ function [dop,okay,msg] = dopEpochScreenManual(dop_input,varargin)
 % 10-Nov-2014 NAB added '.txt' to acceptable inputs
 % 10-Nov-2014 NAB updated exclude msg report
 % 15-Nov-2014 NAB fixed check for exclusion of epochs greater than available
+% 01-Apr-2015 HMP/NAB or statement in file name matching ~ line 207
 
 [dop,okay,msg,varargin] = dopSetBasicInputs(dop_input,varargin);
 msg{end+1} = sprintf('Run: %s',mfilename);
@@ -120,9 +121,9 @@ try
         inputs.varargin = varargin;
         inputs.defaults = struct(...
             'exclude',[],...
-            'manual_fullfile',[], ... %
-            'manual_dir',['C:\Users\hpayne\Dropbox\dopStep\dopOSCCIscript_examples\'],...
-            'manual_file',['exclude_epochs.txt'],...
+            'manual_fullfile',[], ... 
+            'manual_dir',[],...
+            'manual_file',[],...
             'file',[],... % for error reporting mostly
             'msg',1,... % show messages
             'wait_warn',0 ... % wait to close warning dialogs
@@ -203,9 +204,8 @@ try
                     while isempty(dop.tmp.match) && i < numel(dop.tmp.man.manual_list)
                         i = i + 1;
                         [~,tmp_file,tmp_ext] = fileparts(dop.tmp.man.manual_list{i});
-                        if strcmp([tmp_file,tmp_ext],dop.file)
-                            dop.tmp.match = i;
-                        elseif ~isempty(strfind(dop.tmp.man.manual_list,dop.file))
+                        if strcmp([tmp_file,tmp_ext],dop.file) || ~isempty(strfind(dop.tmp.man.manual_list,dop.file))
+                            % or from Heather Payne 01-Apr-2015
                             dop.tmp.match = i;
                         end
                     end
@@ -218,7 +218,7 @@ try
                 else
                     dop.tmp.exclude = dop.tmp.man.manual_exclude{dop.tmp.match};
                     msg{end+1} = sprintf(['file (%s) found in'...
-                        ' manual screening file: %s\n\t'...
+                        'manual screening file: %s\n\t'...
                         '%u epochs to exclude'],dop.file,dop.tmp.manual_file,numel(dop.tmp.exclude));
                     if numel(dop.tmp.exclude)
                         msg{end} = strrep(msg{end},'exclude',...
@@ -265,5 +265,4 @@ try
     end
 catch err
     save(dopOSCCIdebug);rethrow(err);
-end
 end
