@@ -122,9 +122,9 @@ function [dop,okay,msg] = dopOSCCInew_func(dop_input,varargin)
 % - okay = logical (0 or 1) for problem, 0 = no problem, 1 = problem
 % - msg = message about progress/events within function
 %
-% Created: XX-Sep-2014 NAB
+% Created: XX-May-2015 NAB
 % Edits:
-% 08-Sep-2014 NAB - continually updating list of input help information
+% 08-May-2015 NAB - continually updating list of input help information
 
 [dop,okay,msg,varargin] = dopSetBasicInputs(dop_input,varargin);
 msg{end+1} = sprintf('Run: %s',mfilename);
@@ -168,4 +168,5 @@ try
 catch err
     save(dopOSCCIdebug);rethrow(err);
 end
+
 end

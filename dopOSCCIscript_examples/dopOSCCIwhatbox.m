@@ -19,9 +19,9 @@ dop.def.event_sep = 35; % no longer used to find events, just to check whether y
 
 dop.def.downsample_rate = 25; % Hertz
 
-% lower and upper values - confirmed 19-Jan-2015
-dop.def.epoch = [-14 15]; % [-10 16]; %
-dop.def.baseline = [-14 -9];
+% lower and upper values
+dop.def.epoch =  [-14 15]; % [-6 15]; %[-10 15]; %
+dop.def.baseline = [-14 -9]; % [-6 -1]; %[-10 -5]; %
 dop.def.poi = [5 15];
 dop.def.act_window = 2; % activation window
 
@@ -35,11 +35,11 @@ dop.def.correct_pct = 5; % if =< x% outside range, correct with mean/median
 dop.def.act_separation = 10; % acceptable activation difference
 dop.def.act_separation_pct = 1;%0.5;%1;
 
-dop.def.screen = {'manual','length','act','sep'}; % could add 'manual' to this 
+dop.def.screen = {'manual','length','act','sep'}; % could add 'manual' to this
 
 % manual screening:
 dop.def.manual_file = 'whatbox_INFANT_base-14to-9_POI_5to15_NicMan13_dopStep.txt'; % specify the manual screening file
-dop.def.manual_dir = '/Users/mq20111600/Google Drive/nProjects/whatbox_methods/data/manual_screening/'; % directory
+dop.def.manual_dir = '/Users/mq20111600/Google Drive/nProjects/whatbox_methods/data/manual_screening'; % directory
 % use the above 2 or the below 1
 dop.def.manual_fullfile = []; % directory and name in single string
 
@@ -53,7 +53,7 @@ dop.def.keep_data_steps = 1;
 
 
 % define which information will be saved
-dop.save.extras = {'file','clip','clip_left','clip_right','clip_left_max','clip_right_max'};
+dop.save.extras = {'file'};
 % you can add your own variables to 'extras', just need to be defined
 % somewhere as dop.save.x = where x = variable name
 dop.save.summary = {'overall'}; % versus 'epoch' (not well tested yet)
@@ -67,16 +67,15 @@ dop.save.messages = 1;
 
 dop.save.save_file = []; % this will be auto completed based upon the dop.def.task_name variable
 % dop.save.save_dir = 'C:\Users\mq20111600\Documents\nData\dopStep';
-[dop,okay,msg] = dopSaveDir(dop,'suffix','clipped');
+[dop,okay,msg] = dopSaveDir(dop);
+[dop,okay,msg] = dopSaveDef(dop,okay,msg);
 % or
 % dop.save.save_dir = dopSaveDir(dop,'dir_only',1);
 % or
 % dop.save.save_dir = '/Users/mq20111600/Documents/nData/tmpData';
 
 % dop.data_dir = 'C:\Users\mq20111600\Desktop\UniSA Infant TCD';
-
-% dop.data_dir = '/Users/mq20111600/Documents/nData/nData2014/UniSA Infant TCD';
-dop.data_dir = '/Users/mq20111600/Google Drive/nProjects/whatbox_methods/data/raw/';
+dop.data_dir = '/Users/mq20111600/Google Drive/nProjects/whatbox_methods/data/raw/'; %'/Users/mq20111600/Documents/nData/nData2014/UniSA Infant TCD';
 [dop,okay,msg] = dopGetFileList(dop,okay,msg);
 % in.file_list = {'test.exp'};
 if okay
@@ -93,11 +92,6 @@ if okay
         % this is called within dopImport as well
         [dop,okay,msg] = dopChannelExtract(dop,okay,msg);
         
-        % could do this if you wanted to check the effect of clipping
-        [dop,okay,msg] = dopClip(dop,okay,msg,'upper',133);
-        
-%         [dop,okay,msg] = dopPlot(dop,'wait');
-%     end
         % probably done on import if channel information is available
         % [dop,okay,msg] = dopChannelAdjust(dop); % haven't adjusted for dopSetGetInputs
         
@@ -112,15 +106,13 @@ if okay
         [dop,okay,msg] = dopDataTrim(dop,okay,msg);
         
         [dop,okay,msg] = dopEventChannels(dop,okay,msg);
-       
-        [dop,okay,msg] = dopClipCheck(dop,okay,msg);
-%         [dop,okay,msg] = dopPlot(dop,'wait');
         
         [dop,okay,msg] = dopHeartCycle(dop,okay,msg);
         % to have a look at the data include 'plot' as an input
         % to specify the plot range add 'plot_range',[lower upper] input (in
         % samples currently 10-Aug-2014)
         % [dop,okay,msg] = dopHeartCycle(dop,'plot');
+        
         
         [dop,okay,msg] = dopActCorrect(dop,okay,msg);%,'plot');
         
@@ -158,9 +150,9 @@ if okay
         
         % other functions
         % [dop,okay,msg] = dopUseDataOperations(dop,'base');
-        
-        
-    end % regular loop
+%         keyboard
+        dop = dopProgress(dop);
+    end
     % save the 'collected' data for all okay files
     [dop,okay,msg] = dopSaveCollect(dop);
     % plot the 'collected' data for all okay files
@@ -169,4 +161,5 @@ if okay
     dopCloseMsg;
 end
 
+>>>>>>> b854f8b9a5cbaf401b7b70ee7e5e30451a40dac7
 dopOSCCIalert('finish');
