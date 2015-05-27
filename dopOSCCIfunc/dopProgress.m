@@ -85,7 +85,15 @@ function [dop,okay,msg] = dopProgress(dop_input,varargin)
 %
 % Created: 05-May-2015 NAB
 % Edits:
+<<<<<<< HEAD
 % 
+=======
+% 19-May-2015 NAB added validity check to handle (ie 'isvalid' function)
+% 19-May-2015 NAB still some issues with this - problem when dopMATread was
+%   importing old handle - it was openining something extra fixed by
+%   reducing what is saved in the mat file to data and file_info (see
+%   dopMATsave & dopMATread for more details)
+>>>>>>> 748d2f43d41176e2c9589974cbcc1f2c4741c8e4
 
 
 [dop,okay,msg,varargin] = dopSetBasicInputs(dop_input,varargin);
@@ -100,9 +108,15 @@ try
         inputs.varargin = varargin;
         inputs.defaults = struct(...
             'pos',[.1 .9],... % top left x & y portion of screen
+<<<<<<< HEAD
             'dim',[.2 .05],... % x and y dimensions as portion of screen
             'file',[],... % for error reporting mostly
             'msg',1,... % show messages
+=======
+            'dim',[.3 .1],... % x and y dimensions as portion of screen
+            'file',[],... % for error reporting mostly
+            'showmsg',1,... % show messages
+>>>>>>> 748d2f43d41176e2c9589974cbcc1f2c4741c8e4
             'wait_warn',0 ... % wait to close warning dialogs
             );
 
@@ -114,7 +128,11 @@ try
             if ~isfield(dop,'file_list') && isempty(dop.file_list)
                 okay = 0;
                 msg{end+1} = 'A progress bar isn''t necessary if you aren''t processing a list of files';
+<<<<<<< HEAD
                 dopMessage(msg,dop.tmp.msg,1,okay,dop.tmp.wait_warn);
+=======
+                dopMessage(msg,dop.tmp.showmsg,1,okay,dop.tmp.wait_warn);
+>>>>>>> 748d2f43d41176e2c9589974cbcc1f2c4741c8e4
             end
         end
         if okay
@@ -125,6 +143,7 @@ try
             if isempty(dop.progress.current)
                 okay = 0;
                 msg{end+1} = sprintf('Can''t find current file (%s) in list so can''t update progress',dop.file);
+<<<<<<< HEAD
                 dopMessage(msg,dop.tmp.msg,1,okay,dop.tmp.wait_warn);
             end
         end
@@ -132,6 +151,18 @@ try
             if dop.progress.current == 1 || ~isfield(dop.progress,'h')
                 if isfield(dop.progress,'h')
                     dop.progress = rmfield( dop.progress,'h');
+=======
+                dopMessage(msg,dop.tmp.showmsg,1,okay,dop.tmp.wait_warn);
+            end
+        end
+        if okay
+            if dop.progress.current == 1 || ~isfield(dop.progress,'h') || ~isvalid(dop.progress.h)
+                % if not numeric, could be a string that indicates that
+                % it's been deleted
+                if isfield(dop.progress,'h')
+                    pause;
+                    dop.progress = rmfield(dop.progress,'h');
+>>>>>>> 748d2f43d41176e2c9589974cbcc1f2c4741c8e4
                 end
                 
                 dop.progress.n = numel(dop.file_list);
@@ -140,7 +171,13 @@ try
                 dop.progress.pos = [dop.tmp.pos dop.tmp.dim].* ...
                     repmat(dop.progress.screen_size([3 4]),1,2);
 
+<<<<<<< HEAD
                 dop.progress.h = waitbar(0,dop.progress.msg,'Position',dop.progress.pos);
+=======
+                dop.progress.h = waitbar(0,dop.progress.msg,...
+                    'Position',dop.progress.pos,'Name','dopOSCCI Progress');
+                % seems to need this done every time...
+>>>>>>> 748d2f43d41176e2c9589974cbcc1f2c4741c8e4
                 dop.progress.h_axes = get(dop.progress.h,'CurrentAxes');
                 dop.progress.h_title = get(dop.progress.h_axes,'Title');
                 
@@ -150,9 +187,16 @@ try
             % could add task name to this
             dop.progress.msg = sprintf('dopOSCCI progress: %u%% (file %u of %u)',round(dop.progress.portion*100,0),dop.progress.current,dop.progress.n);
             waitbar(dop.progress.portion,dop.progress.h); % update the progress bar
+<<<<<<< HEAD
             set(dop.progress.h_title,'String',dop.progress.msg); % update the message
             figure(dop.progress.h); % bring to front to make sure it's on top
             drawnow;
+=======
+            
+            set(dop.progress.h_title,'String',dop.progress.msg); % update the message
+            figure(dop.progress.h); % bring to front to make sure it's on top
+%             drawnow; % don't think this is needed
+>>>>>>> 748d2f43d41176e2c9589974cbcc1f2c4741c8e4
             if dop.progress.portion == 1
                 close(dop.progress.h);
             end

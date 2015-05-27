@@ -14,14 +14,20 @@ dop.def.task_name = 'pacedProduction';
 dop.def.signal_channels = [3 4]; % columns in file (e.g., EXP)
 dop.def.event_channels = 5; % EXP files
 dop.def.event_height = 1000; % 400; % greater than
+<<<<<<< HEAD
 dop.def.event_sep = 40; %
 
+=======
+
+dop.def.event_sep = 45; %
+>>>>>>> 748d2f43d41176e2c9589974cbcc1f2c4741c8e4
 
 % dop.def.num_events = 40;
 
 dop.def.downsample_rate = 100; % Hertz
 
 % lower and upper values
+<<<<<<< HEAD
 <<<<<<< HEAD
 dop.def.epoch = [-15 30]; %[-5 20];
 dop.def.baseline = [-15 -5];
@@ -31,6 +37,13 @@ dop.def.epoch = [-15 20]; %[-5 20];
 dop.def.baseline = [-15 -5];
 dop.def.poi = [7 17];
 >>>>>>> b854f8b9a5cbaf401b7b70ee7e5e30451a40dac7
+=======
+
+dop.def.epoch = [-15 20]; %[-5 20];
+dop.def.baseline = [-15 -5];
+dop.def.poi = [7 17];
+
+>>>>>>> 748d2f43d41176e2c9589974cbcc1f2c4741c8e4
 dop.def.act_window = 2; % activation window
 
 dop = dopPeriodChecks(dop,'wait_warn',1);
@@ -67,10 +80,18 @@ dop.save.save_file = []; % this will be auto completed based upon the dop.def.ta
 % in.dir = '/Users/mq20111600/Documents/nData/tmp';%'/Users/mq20111600/Documents/nData/2013/201312infant_fTCD_UniSA/'; %
 % dop.data_dir = '/Users/mq20111600/Documents/nData/Study AA (Abbie doppler stories)/data/raw/dopTrials/wordGen';
 <<<<<<< HEAD
+<<<<<<< HEAD
 dop.data_dir = '/Users/mq20111600/Documents/nData/2015/ppValidation/raw/validation/pacedProduction3down/';
 =======
 dop.data_dir = '/Users/mq20111600/Documents/nData/2015/ppValidation/raw/validation/pacedProduction1down/';
 >>>>>>> b854f8b9a5cbaf401b7b70ee7e5e30451a40dac7
+=======
+
+% dop.data_dir = '/Users/mq20111600/Documents/nData/2015/ppValidation/raw/validation/pacedProduction3down/';
+
+dop.data_dir = '/Users/mq20111600/Documents/nData/2015/ppValidation/raw/validation/pacedProduction1down_PP2/';
+
+>>>>>>> 748d2f43d41176e2c9589974cbcc1f2c4741c8e4
 % in.file_list = dir(fullfile(in.dir,'*.exp'));
 % dop.file_list = dopGetFileList(dop.data_dir);%;dir(in.dir);
 [dop,okay] = dopGetFileList(dop);%;dir(in.dir);
@@ -126,7 +147,7 @@ if okay
         
         [dop,okay,msg] = dopSave(dop,okay,msg);%,'save_dir',dop.save.save_dir);
         
-                dop = dopPlot(dop,'wait');
+%                 dop = dopPlot(dop,'wait');
         
         % other functions
         % [dop,okay,msg] = dopUseDataOperations(dop,'base');
